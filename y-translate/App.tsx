@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { RecordButton } from "./src/components/RecordButton";
 import { StatusDisplay } from "./src/components/StatusDisplay";
@@ -55,7 +56,7 @@ function MainScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={styles.safe} edges={["top", "left", "right"]}>
       {/* Language bar */}
       <View style={styles.langBar}>
         <Text style={styles.langLabel}>EN</Text>
@@ -95,8 +96,10 @@ function MainScreen() {
 export default function App() {
   return (
     <ConvexProvider client={convex}>
-      <MainScreen />
-      {/* <StatusBar style="light" /> */}
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <MainScreen />
+      </SafeAreaProvider>
     </ConvexProvider>
   );
 }
